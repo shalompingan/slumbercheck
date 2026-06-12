@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Cycle Calculator — Free Online | RestLab</title>
+  <meta name="description" content="Free sleep cycle calculator. Find the best bedtime or wake-up time based on 90-minute sleep cycles, your age, and sleep latency.">
+  <meta property="og:title" content="Sleep Cycle Calculator — RestLab">
+  <meta property="og:description" content="Find your optimal sleep schedule. Personalized based on age and sleep latency.">
+  <meta name="robots" content="index, follow">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="bg-white/80 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50">
+    <div class="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-lg tracking-tight">
+        <span class="text-indigo-600">Rest</span><span class="text-gray-900">Lab</span>
+      </a>
+      <div class="flex gap-3 text-xs text-gray-400">
+        <a href="calculator.html" class="text-indigo-600 font-medium">Calculator</a>
+        <a href="assessment.html" class="hover:text-gray-600">Assessment</a>
+        <a href="environment.html" class="hover:text-gray-600">Room Check</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-4 py-10">
+    <div class="text-center mb-8">
+      <div class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full mb-3">Free Tool</div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Sleep Cycle Calculator</h1>
+      <p class="text-sm text-gray-500 mt-1">Find the best time to go to bed or wake up, based on your sleep cycles.</p>
+    </div>
+
+    <!-- Mode Toggle -->
+    <div class="flex bg-gray-100 rounded-lg p-1 mb-6 max-w-xs mx-auto">
+      <button id="modeBedtime" class="flex-1 py-2 text-sm font-medium rounded-md bg-white shadow-sm text-gray-900 transition-all">Calculate Bedtime</button>
+      <button id="modeWakeup" class="flex-1 py-2 text-sm font-medium rounded-md text-gray-500 hover:text-gray-900 transition-all">Calculate Wake-up</button>
+    </div>
+
+    <!-- Calculator Form -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-5">
+
+      <!-- Time Input -->
+      <div id="timeInputGroup">
+        <label class="block text-sm font-medium text-gray-700 mb-2" id="timeLabel">What time do you need to wake up?</label>
+        <input type="time" id="timeInput" value="07:00"
+               class="w-full text-3xl font-bold text-center text-indigo-600 border-b-2 border-indigo-200 focus:border-indigo-500 outline-none py-2 bg-transparent">
+      </div>
+
+      <!-- Age Group -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Your age group</label>
+        <div class="grid grid-cols-3 gap-2">
+          <button data-age="child" class="age-btn px-4 py-2.5 text-sm rounded-lg border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">Child (4–12)</button>
+          <button data-age="adult" class="age-btn px-4 py-2.5 text-sm rounded-lg border border-indigo-300 bg-indigo-50 text-indigo-700 font-medium transition-all">Adult (13–64)</button>
+          <button data-age="senior" class="age-btn px-4 py-2.5 text-sm rounded-lg border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all">Senior (65+)</button>
+        </div>
+        <p class="text-xs text-gray-400 mt-1.5" id="ageInfo">Adults have ~90 min sleep cycles. Children cycle faster (~60 min), seniors ~80 min.</p>
+      </div>
+
+      <!-- Sleep Latency -->
+      <div>
+        <div class="flex justify-between text-sm mb-1">
+          <label class="font-medium text-gray-700">Time to fall asleep</label>
+          <span class="text-indigo-600 font-medium" id="latencyDisplay">15 min</span>
+        </div>
+        <input type="range" id="latencySlider" min="0" max="60" value="15" step="1" class="w-full">
+        <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+          <span>Fall asleep instantly</span>
+          <span>Takes 60 min</span>
+        </div>
+      </div>
+
+      <button id="calculateBtn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors shadow-sm">
+        Calculate
+      </button>
+    </div>
+
+    <!-- Results -->
+    <div id="resultsSection" class="mt-6 hidden">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-1">Recommended Times</h2>
+        <p class="text-xs text-gray-400 mb-4" id="resultExplanation"></p>
+        <div id="resultsList" class="space-y-2"></div>
+      </div>
+
+      <!-- Affiliate CTA -->
+      <div class="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 text-sm">
+        <p class="font-medium text-amber-900 mb-1">💡 Having trouble sleeping?</p>
+        <p class="text-amber-700 text-xs mb-3">A consistent sleep schedule is just one piece. Your mattress, pillow, and room setup matter too.</p>
+        <a href="assessment.html" class="inline-block px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium rounded-lg transition-colors">Take the Sleep Quality Assessment →</a>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="mt-10 bg-gray-50 rounded-xl p-6 text-sm text-gray-500">
+      <h3 class="font-semibold text-gray-700 mb-2">How sleep cycles work</h3>
+      <p class="mb-2">A typical sleep cycle lasts about 90 minutes and includes light sleep, deep sleep, and REM sleep. Waking up in the middle of a cycle leaves you feeling groggy.</p>
+      <p>This calculator works backward from your target wake-up time (or bedtime) to find times that align with the <em>end</em> of a sleep cycle — so you wake up naturally refreshed.</p>
+    </div>
+  </main>
+
+  <footer class="border-t border-gray-100 bg-gray-50 mt-12">
+    <div class="max-w-3xl mx-auto px-4 py-8 text-center text-xs text-gray-400">
+      <p>Informational purposes only. Not medical advice.</p>
+    </div>
+  </footer>
+
+  <script src="js/calculator.js"></script>
+</body>
+</html>
