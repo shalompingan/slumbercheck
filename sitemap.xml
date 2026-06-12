@@ -24,5 +24,9 @@
     <loc>https://slumbercheck.com/results.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  <url>
+    <loc>https://slumbercheck.com/blog/waking-up-at-3-am.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
