@@ -159,6 +159,13 @@ checkBtn.addEventListener('click', () => {
   const passed = Object.values(results).filter(v => v === true).length;
   passCount.textContent = passed;
 
+  // Save to localStorage
+  localStorage.setItem('slumber_environment', JSON.stringify({
+    passed,
+    total: checklistItems.length,
+    factors: checklistItems.map(item => results[item.id] ? 1 : 0)
+  }));
+
   resultsList.innerHTML = checklistItems.map(item => {
     const passed = results[item.id];
     return `

@@ -10,6 +10,15 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://slumbercheck.com">
   <meta name="robots" content="index, follow">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SlumberCheck",
+    "url": "https://slumbercheck.com",
+    "description": "Free sleep health tools: cycle calculator, quality assessment, and environment checker."
+  }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +32,12 @@
       <a href="/" class="font-bold text-lg tracking-tight">
         <span class="text-indigo-600">Slumber</span><span class="text-gray-900">Check</span>
       </a>
-      <div class="text-xs text-gray-400">Sleep Health Tools</div>
+      <div class="flex gap-3 text-xs">
+        <a href="calculator.html" class="text-gray-400 hover:text-gray-600">Calculator</a>
+        <a href="assessment.html" class="text-gray-400 hover:text-gray-600">Assessment</a>
+        <a href="environment.html" class="text-gray-400 hover:text-gray-600">Room Check</a>
+        <a href="results.html" class="text-gray-400 hover:text-gray-600">Report</a>
+      </div>
     </div>
   </nav>
 

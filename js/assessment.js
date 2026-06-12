@@ -206,6 +206,9 @@ function calculateScore() {
   scoreValue.textContent = scaledScore;
   scoreLabel.textContent = rec.label;
 
+  // Save to localStorage
+  localStorage.setItem('slumber_assessment', JSON.stringify({ score: scaledScore, label: rec.label }));
+
   setTimeout(() => {
     scoreBar.style.width = `${(scaledScore / 20) * 100}%`;
     scoreBar.className = `h-full rounded-full transition-all duration-1000 ease-out ${colorMap[category]}`;

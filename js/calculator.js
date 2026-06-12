@@ -113,6 +113,14 @@ function calculate() {
   // Sort by cycle count (ascending)
   times.sort((a, b) => a.cycles - b.cycles);
 
+  // Save to localStorage
+  localStorage.setItem('slumber_calculator', JSON.stringify({
+    mode: currentMode,
+    cycles: times.length > 0 ? times[Math.floor(times.length / 2)].cycles : null,
+    sleepDuration: times.length > 0 ? times[Math.floor(times.length / 2)].sleepDuration : null,
+    totalInBed: times.length > 0 ? times[Math.floor(times.length / 2)].totalInBed : null
+  }));
+
   renderResults(times, cycleLen);
 }
 

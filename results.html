@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Sleep Report — Unified Dashboard | SlumberCheck</title>
+  <meta name="description" content="View your combined sleep data: cycle calculator results, quality assessment score, and environment check. Free sleep dashboard.">
+  <meta property="og:title" content="Your Sleep Report — SlumberCheck">
+  <meta property="og:description" content="Your personalized sleep dashboard with charts and insights.">
+  <meta name="robots" content="index, follow">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="bg-white/80 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50">
+    <div class="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="index.html" class="font-bold text-lg tracking-tight">
+        <span class="text-indigo-600">Slumber</span><span class="text-gray-900">Check</span>
+      </a>
+      <div class="flex gap-3 text-xs">
+        <a href="calculator.html" class="text-gray-400 hover:text-gray-600">Calculator</a>
+        <a href="assessment.html" class="text-gray-400 hover:text-gray-600">Assessment</a>
+        <a href="environment.html" class="text-gray-400 hover:text-gray-600">Room Check</a>
+        <a href="results.html" class="text-indigo-600 font-medium">Report</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-4 py-10">
+    <div class="text-center mb-8">
+      <div class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full mb-3">Dashboard</div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Your Sleep Report</h1>
+      <p class="text-sm text-gray-500 mt-1">Combined view of your sleep data across all tools.</p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div id="summaryCards" class="mb-8"></div>
+
+    <!-- Assessment Chart -->
+    <div id="assessmentChartWrapper" class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-1">Sleep Quality Score</h2>
+      <p class="text-xs text-gray-400 mb-4">Your assessment result visualized</p>
+      <div class="max-w-[200px] mx-auto">
+        <canvas id="assessmentChartCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Environment Chart -->
+    <div id="envChartWrapper" class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+      <h2 class="text-sm font-semibold text-gray-700 mb-1">Environment Check</h2>
+      <p class="text-xs text-gray-400 mb-4">Which bedroom factors need attention</p>
+      <div class="max-w-[280px] mx-auto">
+        <canvas id="envChartCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Tool Links -->
+    <div id="ctaLinks" class="mb-8"></div>
+  </main>
+
+  <footer class="border-t border-gray-100 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 py-8 text-center text-xs text-gray-400">
+      <p>Informational purposes only. Not medical advice.</p>
+    </div>
+  </footer>
+
+  <script src="js/results.js"></script>
+</body>
+</html>
