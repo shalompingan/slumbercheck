@@ -24,6 +24,7 @@
     <loc>https://slumbercheck.com/results.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
   <url>
     <loc>https://slumbercheck.com/blog/waking-up-at-3-am.html</loc>
     <changefreq>monthly</changefreq>
@@ -36,6 +37,11 @@
   </url>
   <url>
     <loc>https://slumbercheck.com/blog/does-melatonin-work.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://slumbercheck.com/blog/tired-after-8-hours-sleep.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
