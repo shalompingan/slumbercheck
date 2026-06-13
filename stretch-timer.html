@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRKL2YKL27"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BRKL2YKL27');
+  </script>
+  <title>Bedtime Stretch Timer — 5-Minute Guided Stretching for Better Sleep</title>
+  <meta name="description" content="A 5-minute guided bedtime stretching timer with visual countdown and gentle audio cues. 5 science-backed stretches to help you relax and fall asleep faster.">
+  <meta name="keywords" content="bedtime stretching timer, sleep stretch timer, guided stretching before bed, 5 minute bedtime stretch, relaxation timer">
+  <meta property="og:title" content="Bedtime Stretch Timer — Fall Asleep Faster">
+  <meta property="og:description" content="A guided 5-minute bedtime stretching routine with visual timer and gentle cues. No app download needed.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://slumbercheck.com/stretch-timer.html">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://slumbercheck.com/stretch-timer.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0b0b1a 0%, #141428 30%, #1a1035 70%, #0f0f1a 100%);
+      min-height: 100vh;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite alternate;
+      opacity: 0.3;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.15; transform: scale(0.8); }
+      100% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    /* Navigation */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 15, 30, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      height: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { font-weight: 700; font-size: 1.125rem; text-decoration: none; }
+    .nav-logo span:first-child { color: #818cf8; }
+    .nav-logo span:last-child { color: #e2e8f0; }
+    .nav-links { display: flex; gap: 0.75rem; }
+    .nav-links a {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #94a3b8; }
+    .nav-links a.active { color: #818cf8; }
+
+    /* Main container */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+      min-height: calc(100vh - 3.5rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Ad placeholder */
+    .ad-banner {
+      width: 100%;
+      max-width: 468px;
+      height: 60px;
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.15);
+      margin-bottom: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    /* Start screen */
+    .screen { display: none; flex-direction: column; align-items: center; width: 100%; flex: 1; }
+    .screen.active { display: flex; }
+
+    /* Start screen */
+    .start-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 1rem;
+      background: linear-gradient(135deg, #e2e8f0, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .start-sub {
+      font-size: 0.875rem;
+      color: #64748b;
+      text-align: center;
+      margin-top: 0.5rem;
+      line-height: 1.6;
+    }
+    .exercise-preview {
+      width: 100%;
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .exercise-preview-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+    .exercise-preview-item .num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(129, 140, 248, 0.2);
+      color: #818cf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .exercise-preview-item .name { color: #e2e8f0; font-weight: 500; flex: 1; }
+    .exercise-preview-item .time { color: #64748b; font-size: 0.75rem; }
+    .exercise-preview-item .emoji { font-size: 1.1rem; }
+
+    /* Timer screen */
+    .phase-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #818cf8;
+      margin-bottom: 0.75rem;
+    }
+    .phase-label.rest { color: #34d399; }
+    .exercise-counter {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 0.25rem;
+    }
+    .exercise-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+    .exercise-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      max-width: 320px;
+    }
+
+    /* Progress circle */
+    .circle-wrap {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin-bottom: 1.5rem;
+    }
+    .circle-wrap svg {
+      transform: rotate(-90deg);
+      width: 100%;
+      height: 100%;
+    }
+    .circle-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.06);
+      stroke-width: 6;
+    }
+    .circle-progress {
+      fill: none;
+      stroke: url(#timerGradient);
+      stroke-width: 6;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.3s ease;
+    }
+    .circle-progress.paused { transition: none; }
+    .circle-time {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      font-weight: 300;
+      color: #f1f5f9;
+      letter-spacing: -0.02em;
+    }
+    .circle-time .seconds { font-size: 1rem; color: #64748b; font-weight: 400; margin-left: 2px; }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    .btn {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-primary {
+      background: linear-gradient(135deg, #818cf8, #6366f1);
+      color: #fff;
+      padding: 0.7rem 2rem;
+      min-width: 120px;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25);
+    }
+    .btn-primary:hover { box-shadow: 0 6px 28px rgba(99, 102, 241, 0.35); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: #94a3b8;
+      padding: 0.7rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+    .btn-skip {
+      background: transparent;
+      color: #475569;
+      padding: 0.7rem 1rem;
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+    .btn-skip:hover { color: #64748b; }
+    .btn-restart {
+      background: rgba(255,255,255,0.06);
+      color: #94a3b8;
+      padding: 0.7rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .btn-restart:hover { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+
+    /* Rest indicator */
+    .rest-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #34d399;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .rest-indicator .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Progress dots */
+    .progress-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .progress-dot.active { background: #818cf8; box-shadow: 0 0 8px rgba(129, 140, 248, 0.5); }
+    .progress-dot.done { background: #34d399; }
+
+    /* Completion screen */
+    .complete-icon {
+      font-size: 3.5rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .complete-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(135deg, #34d399, #6ee7b7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .complete-sub {
+      font-size: 0.85rem;
+      color: #64748b;
+      text-align: center;
+      margin-top: 0.5rem;
+      line-height: 1.6;
+      max-width: 360px;
+    }
+
+    /* Affiliate CTA card */
+    .affiliate-cta {
+      width: 100%;
+      max-width: 400px;
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      background: linear-gradient(135deg, rgba(255, 251, 235, 0.06), rgba(255, 247, 237, 0.04));
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 14px;
+      text-align: center;
+    }
+    .affiliate-cta h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fbbf24;
+      margin-bottom: 0.3rem;
+    }
+    .affiliate-cta p {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+    .affiliate-cta .btn-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #1c1917;
+      padding: 0.65rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .affiliate-cta .btn-cta:hover { box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3); transform: translateY(-1px); }
+
+    /* Footer */
+    .footer {
+      width: 100%;
+      text-align: center;
+      padding: 1.5rem 0 0.5rem;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+    .footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
+    .footer a:hover { color: rgba(255,255,255,0.35); }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container { padding: 1rem 0.75rem 2rem; }
+      .circle-wrap { width: 180px; height: 180px; }
+      .circle-time { font-size: 2.5rem; }
+      .exercise-name { font-size: 1.15rem; }
+      .start-title { font-size: 1.25rem; }
+      .ad-banner { height: 50px; }
+      .controls { gap: 0.5rem; }
+      .btn-primary { padding: 0.6rem 1.5rem; min-width: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Stars -->
+  <div class="stars" id="stars"></div>
+
+  <!-- SVG Gradient Defs -->
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#818cf8" />
+        <stop offset="100%" stop-color="#a78bfa" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><span>Slumber</span><span>Check</span></a>
+      <div class="nav-links">
+        <a href="/calculator.html">Calculator</a>
+        <a href="/assessment.html">Assessment</a>
+        <a href="/environment.html">Room Check</a>
+        <a href="/stretch-timer.html" class="active">Stretch</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="container">
+
+    <!-- Ad Banner -->
+    <div class="ad-banner">Ad placeholder · 468×60</div>
+
+    <!-- Screen: Start -->
+    <div class="screen active" id="screen-start">
+      <div class="start-title">Bedtime Stretch Timer</div>
+      <p class="start-sub">A gentle 5-movement guided routine to release tension and ease into sleep. Each pose lasts 30 seconds.</p>
+
+      <div class="exercise-preview" id="exerciseList"></div>
+
+      <button class="btn btn-primary" onclick="startSession()">Begin →</button>
+    </div>
+
+    <!-- Screen: Timer -->
+    <div class="screen" id="screen-timer">
+      <div class="phase-label" id="phaseLabel">STRETCH</div>
+      <div class="exercise-counter" id="exerciseCounter">1 of 5</div>
+      <div class="exercise-name" id="exerciseName">Neck Release</div>
+      <div class="exercise-desc" id="exerciseDesc">Gently tilt your head side to side</div>
+
+      <div class="circle-wrap">
+        <svg viewBox="0 0 220 220">
+          <circle class="circle-bg" cx="110" cy="110" r="95" />
+          <circle class="circle-progress" id="circleProgress" cx="110" cy="110" r="95"
+            stroke-dasharray="596.9" stroke-dashoffset="0" />
+        </svg>
+        <div class="circle-time"><span id="timeDisplay">30</span><span class="seconds">s</span></div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-skip" id="btnSkip" onclick="skipExercise()">Skip →</button>
+        <button class="btn btn-primary" id="btnPause" onclick="togglePause()">⏸ Pause</button>
+      </div>
+
+      <div class="progress-dots" id="progressDots"></div>
+    </div>
+
+    <!-- Screen: Complete -->
+    <div class="screen" id="screen-complete">
+      <div class="complete-icon">🌙</div>
+      <div class="complete-title">Well Done</div>
+      <p class="complete-sub">
+        You've completed your bedtime stretch routine. Your body has been signaled it's time to rest — your mind will follow.
+      </p>
+
+      <div class="affiliate-cta">
+        <h3>🛏️ Deepen Your Relaxation</h3>
+        <p>A weighted blanket or cooling eye mask can help extend the calm you just created into a full night of deep sleep.</p>
+        <a href="#" class="btn-cta">Shop Sleep Accessories →</a>
+      </div>
+
+      <button class="btn btn-restart" onclick="resetSession()">🔄 Do it again</button>
+
+      <div class="footer">
+        <a href="/blog/bedtime-stretching-routine.html">Read the full guide →</a>
+      </div>
+    </div>
+
+    <!-- Spacer for bottom ad -->
+    <div class="ad-banner" style="margin-top:auto;margin-bottom:0.5rem;">Ad placeholder · 468×60</div>
+
+    <div class="footer">
+      These tools are for informational purposes only.
+    </div>
+  </div>
+
+  <script>
+    // ─── Exercises ──────────────────────────────────────────────
+    const EXERCISES = [
+      { name: 'Neck Release',        emoji: '🧘', desc: 'Gently tilt your head side to side, releasing tension in your neck and shoulders.' },
+      { name: "Child's Pose",        emoji: '🌊', desc: 'Kneel, sit back on your heels, and extend your arms forward on the floor.' },
+      { name: 'Seated Forward Fold', emoji: '🦋', desc: 'Sit with legs extended, hinge at the hips, and reach toward your toes.' },
+      { name: 'Figure-Four Stretch', emoji: '🦵', desc: 'Lie back, cross one ankle over the opposite knee, and pull gently.' },
+      { name: 'Spinal Twist',        emoji: '🔄', desc: 'Lie on your back and drop both knees to one side, keeping shoulders flat.' },
+    ];
+
+    const STRETCH_DURATION = 30; // seconds
+    const REST_DURATION   = 5;   // seconds
+
+    // ─── State ─────────────────────────────────────────────────
+    let state = {
+      phase: 'stretch',       // 'stretch' | 'rest'
+      index: 0,               // current exercise index
+      remaining: STRETCH_DURATION,
+      running: false,
+      finished: false,
+      timerId: null,
+      animFrameId: null,
+      lastTick: 0,
+      elapsed: 0,
+      totalDuration: STRETCH_DURATION,
+    };
+
+    const CIRCUMFERENCE = 2 * Math.PI * 95; // ≈ 596.9
+    const circle = document.getElementById('circleProgress');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const phaseLabel = document.getElementById('phaseLabel');
+    const exerciseCounter = document.getElementById('exerciseCounter');
+    const exerciseName = document.getElementById('exerciseName');
+    const exerciseDesc = document.getElementById('exerciseDesc');
+    const btnPause = document.getElementById('btnPause');
+    const btnSkip = document.getElementById('btnSkip');
+
+    // ─── Stars ─────────────────────────────────────────────────
+    (function createStars() {
+      const container = document.getElementById('stars');
+      const count = 80;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+        star.style.animationDelay = Math.random() * 4 + 's';
+        star.style.width = star.style.height = (1.5 + Math.random() * 1.5) + 'px';
+        container.appendChild(star);
+      }
+    })();
+
+    // ─── Sound ─────────────────────────────────────────────────
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
+    }
+
+    function playTone(freq, duration, type, volume) {
+      try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(volume || 0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) { /* silent fail */ }
+    }
+
+    function playDing() {
+      playTone(880, 0.6, 'sine', 0.12);
+      setTimeout(() => playTone(1100, 0.5, 'sine', 0.08), 150);
+    }
+
+    function playRest() {
+      playTone(660, 0.4, 'triangle', 0.08);
+    }
+
+    function playComplete() {
+      const notes = [523, 659, 784, 1047];
+      notes.forEach((f, i) => {
+        setTimeout(() => playTone(f, 0.5, 'sine', 0.1), i * 200);
+      });
+    }
+
+    // ─── UI Builders ───────────────────────────────────────────
+    function buildExerciseList() {
+      const list = document.getElementById('exerciseList');
+      list.innerHTML = EXERCISES.map((ex, i) => `
+        <div class="exercise-preview-item">
+          <span class="num">${i + 1}</span>
+          <span class="emoji">${ex.emoji}</span>
+          <span class="name">${ex.name}</span>
+          <span class="time">30s</span>
+        </div>
+      `).join('');
+    }
+
+    function buildProgressDots() {
+      const container = document.getElementById('progressDots');
+      container.innerHTML = EXERCISES.map((_, i) => {
+        let cls = 'progress-dot';
+        if (i === state.index && state.phase === 'stretch') cls += ' active';
+        else if (i < state.index || (i === state.index && state.phase === 'rest')) cls += ' done';
+        return `<div class="${cls}"></div>`;
+      }).join('');
+    }
+
+    // ─── Screen management ─────────────────────────────────────
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + id).classList.add('active');
+    }
+
+    // ─── Timer ─────────────────────────────────────────────────
+    function startSession() {
+      state.index = 0;
+      state.phase = 'stretch';
+      state.remaining = STRETCH_DURATION;
+      state.totalDuration = STRETCH_DURATION;
+      state.running = true;
+      state.finished = false;
+      state.lastTick = performance.now();
+      state.elapsed = 0;
+
+      showScreen('timer');
+      updateUI();
+      startLoop();
+    }
+
+    function startLoop() {
+      stopLoop();
+      state.lastTick = performance.now();
+      tick();
+    }
+
+    function tick() {
+      if (!state.running) return;
+      const now = performance.now();
+      const delta = (now - state.lastTick) / 1000;
+      state.lastTick = now;
+
+      state.remaining -= delta;
+      state.elapsed += delta;
+
+      updateUI();
+
+      if (state.remaining <= 0) {
+        if (state.phase === 'stretch') {
+          // Move to rest or next exercise
+          if (state.index < EXERCISES.length - 1) {
+            // Start rest period
+            playRest();
+            state.phase = 'rest';
+            state.remaining = REST_DURATION;
+            state.totalDuration = REST_DURATION;
+            state.elapsed = 0;
+            updateUI();
+            state.timerId = requestAnimationFrame(tick);
+          } else {
+            // All done!
+            playComplete();
+            state.finished = true;
+            stopLoop();
+            showCompletion();
+            return;
+          }
+        } else {
+          // Rest is over, move to next exercise
+          playDing();
+          state.index++;
+          state.phase = 'stretch';
+          state.remaining = STRETCH_DURATION;
+          state.totalDuration = STRETCH_DURATION;
+          state.elapsed = 0;
+          updateUI();
+          state.timerId = requestAnimationFrame(tick);
+        }
+      } else {
+        state.timerId = requestAnimationFrame(tick);
+      }
+    }
+
+    function stopLoop() {
+      if (state.timerId) {
+        cancelAnimationFrame(state.timerId);
+        state.timerId = null;
+      }
+    }
+
+    function togglePause() {
+      if (state.finished) return;
+      state.running = !state.running;
+      if (state.running) {
+        state.lastTick = performance.now();
+        btnPause.innerHTML = '⏸ Pause';
+        circle.classList.remove('paused');
+        startLoop();
+      } else {
+        btnPause.innerHTML = '▶ Resume';
+        circle.classList.add('paused');
+        stopLoop();
+      }
+    }
+
+    function skipExercise() {
+      if (state.finished) return;
+      if (state.phase === 'rest') {
+        // End rest early
+        state.remaining = 0;
+      } else if (state.index < EXERCISES.length - 1) {
+        // Move to rest period for next exercise
+        state.phase = 'rest';
+        state.remaining = REST_DURATION;
+        state.totalDuration = REST_DURATION;
+        state.elapsed = 0;
+        updateUI();
+      } else {
+        // Last exercise — skip to complete
+        playComplete();
+        state.finished = true;
+        stopLoop();
+        showCompletion();
+      }
+    }
+
+    // ─── UI Updates ────────────────────────────────────────────
+    function updateUI() {
+      const ex = EXERCISES[state.index];
+      const display = Math.max(0, Math.ceil(state.remaining));
+
+      // Phase label
+      if (state.phase === 'rest') {
+        phaseLabel.textContent = 'GET READY';
+        phaseLabel.className = 'phase-label rest';
+      } else {
+        phaseLabel.textContent = 'STRETCH';
+        phaseLabel.className = 'phase-label';
+      }
+
+      // Exercise info
+      exerciseCounter.textContent = `${state.index + 1} of ${EXERCISES.length}`;
+      exerciseName.textContent = state.phase === 'rest' ? 'Prepare for...' : ex.name;
+      exerciseDesc.textContent = state.phase === 'rest'
+        ? `Next up: ${ex.name}`
+        : ex.desc;
+
+      // Time display
+      timeDisplay.textContent = display;
+
+      // Circle progress
+      const pct = state.totalDuration > 0 ? state.remaining / state.totalDuration : 0;
+      const offset = CIRCUMFERENCE * (1 - pct);
+      circle.setAttribute('stroke-dashoffset', offset);
+
+      // Dots
+      buildProgressDots();
+
+      // Skip button visibility
+      btnSkip.style.display = state.phase === 'rest' ? 'none' : '';
+    }
+
+    // ─── Completion ────────────────────────────────────────────
+    function showCompletion() {
+      showScreen('complete');
+    }
+
+    function resetSession() {
+      state.running = false;
+      state.finished = false;
+      stopLoop();
+      document.getElementById('btnPause').innerHTML = '⏸ Pause';
+      showScreen('start');
+    }
+
+    // ─── Init ──────────────────────────────────────────────────
+    buildExerciseList();
+    buildProgressDots();
+  </script>
+</body>
+</html>
