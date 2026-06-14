@@ -1,3 +1,0 @@
-# Override Cloudflare Pages default 308 redirect for .html URLs
-# Serve .html files directly instead of redirecting to extensionless URLs
-/*.html  /:splat.html  200
